@@ -3,8 +3,8 @@ require_relative 'Garages'
 
 class Vans
 
-  def pickup_broken_bikes
-
+  def pickup_broken_bikes(broken_bikes)
+    
   end
 
 end

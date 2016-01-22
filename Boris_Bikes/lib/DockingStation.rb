@@ -3,7 +3,7 @@ require_relative 'Bike'
 class DockingStation
 
 DEFAULT_CAPACITY = 20
-attr_reader :capacity, :bikes
+attr_reader :capacity, :bikes, :broken_bikes
 
   def initialize (capacity=DEFAULT_CAPACITY)
     @bikes = []
@@ -12,7 +12,11 @@ attr_reader :capacity, :bikes
 
   def release_bike
     raise "No Bikes Available" if @bikes.empty?
-    self.find_working_bikes.pop
+    if find_working_bikes.is_a? String
+      return "Sorry, this Bike is Broken"
+    else
+      find_working_bikes.pop
+    end
   end
 
   def dock(bike)
@@ -22,8 +26,10 @@ attr_reader :capacity, :bikes
 
   def find_working_bikes
     working_bikes = []
+    @broken_bikes = []
     @bikes.each do |bike|
       if bike.broken?
+        @broken_bikes << bike
         return "Sorry, this Bike is Broken"
       else
         working_bikes << bike
@@ -32,7 +38,7 @@ attr_reader :capacity, :bikes
     working_bikes
   end
 
-  def find_broken_bikes
+  def release_broken_bikes(van)
 
   end
 

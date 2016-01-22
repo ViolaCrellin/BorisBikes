@@ -57,9 +57,15 @@ describe DockingStation do
       bike = double(:dummy_bike, broken?: true, report_broken: true)
       bike.report_broken
       subject.dock(bike)
-      expect {subject.release_bike}.to eq("Sorry, this Bike is Broken")
+      expect(subject.release_bike).to eq("Sorry, this Bike is Broken")
 
     end
   end
+
+    #RELEASE BROKEN BIKES
+
+    describe '#release broken bikes' do
+      it {is_expected.to respond_to (:release_broken_bikes).with(1).argument }
+    end
 
 end
