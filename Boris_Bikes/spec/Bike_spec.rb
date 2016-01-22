@@ -23,4 +23,11 @@ describe Bike do
     end
   end
 
+  describe "#fix" do
+    it 'returns false when bike is fixed' do
+      bike.fix
+      expect(bike.broken?).to be false
+    end
+  end
+
 end

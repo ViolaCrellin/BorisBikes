@@ -3,7 +3,7 @@ require_relative 'Bike'
 class DockingStation
 
 DEFAULT_CAPACITY = 20
-attr_reader :capacity, :bikes, :broken_bikes
+attr_reader :capacity, :bikes
 
   def initialize (capacity=DEFAULT_CAPACITY)
     @bikes = []
@@ -13,7 +13,7 @@ attr_reader :capacity, :bikes, :broken_bikes
   def release_bike
     raise "No Bikes Available" if @bikes.empty?
     if find_working_bikes.is_a? String
-      return "Sorry, this Bike is Broken"
+      return find_working_bikes
     else
       find_working_bikes.pop
     end
@@ -24,12 +24,17 @@ attr_reader :capacity, :bikes, :broken_bikes
     @bikes << bike # => Shovelling a bike into the array
   end
 
+  def replenish_bikes(working_bikes)
+    raise "Docking station full" if full?
+    @bikes << working_bikes
+    @bikes.flatten!
+  end
+
+
   def find_working_bikes
     working_bikes = []
-    @broken_bikes = []
     @bikes.each do |bike|
       if bike.broken?
-        @broken_bikes << bike
         return "Sorry, this Bike is Broken"
       else
         working_bikes << bike
@@ -38,8 +43,8 @@ attr_reader :capacity, :bikes, :broken_bikes
     working_bikes
   end
 
-  def release_broken_bikes(van)
-
+  def broken_bikes
+    broken_bikes = @bikes.select {|bike| bike.broken?}
   end
 
 private

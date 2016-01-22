@@ -20,13 +20,15 @@ describe DockingStation do
 
 # DOCKING BIKE TESTS
 
-  context 'responds to "dock" with one argument'
-    it { is_expected.to respond_to(:dock).with(1).argument}
+  describe "#dock(bike)" do
+    context 'responds to "dock" with one argument'
+      it { is_expected.to respond_to(:dock).with(1).argument}
 
-  it 'raises error "Docking Station Full" when docking station capacity is reached' do
-    DockingStation::DEFAULT_CAPACITY.times {subject.dock(dummy_bike)}
-    expect {subject.dock(dummy_bike)}.to raise_error("Docking station full")
-  end
+      it 'raises error "Docking Station Full" when docking station capacity is reached' do
+        DockingStation::DEFAULT_CAPACITY.times {subject.dock(dummy_bike)}
+        expect {subject.dock(dummy_bike)}.to raise_error("Docking station full")
+      end
+    end
 
 # ATTR_ READER TEST
 
@@ -36,8 +38,6 @@ describe DockingStation do
 
 
 # RELEASE BIKES TESTS
-
-  it { should respond_to(:release_bike) }
 
   describe '#release_bike' do
     it 'expects "release_bike" to get a working bike' do
@@ -62,10 +62,23 @@ describe DockingStation do
     end
   end
 
-    #RELEASE BROKEN BIKES
+    describe "#replenish_bikes" do
 
-    describe '#release broken bikes' do
-      it {is_expected.to respond_to (:release_broken_bikes).with(1).argument }
+      it {is_expected.to respond_to(:replenish_bikes).with(1).argument}
+
+      it "can accept bikes fixed at the garage to replenish the docking station" do
+        bike = Bike.new
+        station = DockingStation.new
+        van = Van.new
+        10.times do
+          van.cargo << bike
+        end
+      expect(station.replenish_bikes(van.cargo)).to eq station.bikes
+
+      end
+
     end
+
+
 
 end
