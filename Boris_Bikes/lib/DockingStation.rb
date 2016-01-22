@@ -3,7 +3,7 @@ require_relative 'Bike'
 class DockingStation
 
 DEFAULT_CAPACITY = 20
-attr_reader :bikes, :capacity
+attr_reader :capacity, :bikes
 
   def initialize (capacity=DEFAULT_CAPACITY)
     @bikes = []
@@ -12,8 +12,12 @@ attr_reader :bikes, :capacity
 
   def release_bike
     raise "No Bikes Available" if @bikes.empty?
-    raise "Sorry, this Bike is Broken" if @bikes[-1].broken?
-      @bikes.pop
+
+    for i in 0..@bikes.size
+      bike = @bikes[i]
+        return @bikes.delete_at(i) if bike.broken? == false
+      end
+        fail "Sorry, this Bike is Broken"
   end
 
   def dock(bike)
@@ -21,8 +25,12 @@ attr_reader :bikes, :capacity
     @bikes << bike # => Shovelling a bike into the array
   end
 
-private
+  def sort_broken_bikes
+    @bikes.select! {|bike| bike.broken? == true }
+    @bikes.flatten!
+  end
 
+private
 
   def full?
     @bikes.size >= @capacity

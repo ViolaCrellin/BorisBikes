@@ -1,8 +1,8 @@
 class Bike
 
-  # def initialize(broken=false)
-  #   @broken = broken
-  # end
+  def initialize(broken=false)
+    @broken = broken
+  end
 
   def working?
     if @broken == false
