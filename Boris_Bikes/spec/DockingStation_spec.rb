@@ -73,12 +73,9 @@ describe DockingStation do
         10.times do
           van.cargo << bike
         end
+
       expect(station.replenish_bikes(van.cargo)).to eq station.bikes
 
       end
-
     end
-
-
-
 end

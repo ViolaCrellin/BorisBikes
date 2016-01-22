@@ -24,7 +24,7 @@ let(:van) {Van.new}
       station.find_working_bikes
       van.pickup_broken_bikes(station.broken_bikes)
       subject.unload(van.cargo)
-      expect(subject.fix_broken_bikes[0]).to be false
+      expect(subject.fix_broken_bikes[0].broken?).to be false
     end
   end
 

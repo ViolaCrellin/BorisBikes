@@ -42,7 +42,7 @@ describe "#pickup_broken_bikes" do
       end
 
       garage.fix_broken_bikes
-      expect(van.pickup_working_bikes(garage.fix_broken_bikes)[0]).to be false
+      expect(van.pickup_working_bikes(garage.fix_broken_bikes)[0].broken?).to be false
     end
 
 
