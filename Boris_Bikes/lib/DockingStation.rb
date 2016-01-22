@@ -12,12 +12,7 @@ attr_reader :capacity, :bikes
 
   def release_bike
     raise "No Bikes Available" if @bikes.empty?
-
-    for i in 0..@bikes.size
-      bike = @bikes[i]
-        return @bikes.delete_at(i) if bike.broken? == false
-      end
-        fail "Sorry, this Bike is Broken"
+    self.find_working_bikes.pop
   end
 
   def dock(bike)
@@ -25,9 +20,20 @@ attr_reader :capacity, :bikes
     @bikes << bike # => Shovelling a bike into the array
   end
 
-  def sort_broken_bikes
-    @bikes.select! {|bike| bike.broken? == true }
-    @bikes.flatten!
+  def find_working_bikes
+    working_bikes = []
+    @bikes.each do |bike|
+      if bike.broken?
+        return "Sorry, this Bike is Broken"
+      else
+        working_bikes << bike
+      end
+    end
+    working_bikes
+  end
+
+  def find_broken_bikes
+
   end
 
 private
